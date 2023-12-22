@@ -7,14 +7,14 @@
 import re
 def main():
     games = []
-    with open('inputs/day2-sample.txt', 'r') as f:
+    with open('inputs/day2.txt', 'r') as f:
         lines = f.readlines()
     
     for line in lines:
         games.append(line.strip())
     
-    part1(games)
-    
+    #part1(games)
+    part2(games)
 
 def part1(games):
     game_pieces = {'blue': 14, 'green': 13, 'red': 12}
@@ -56,6 +56,29 @@ def part1(games):
         sum += int(match[0])      
     print(sum)
         
+def part2(games):
+    powers = []
+    sum = 0
+
+    # uses map() function to make sure list of ints is created; not list of str
+    for game in games:
+        if 'red' in game:
+            reds = list(map(int,re.findall(r'(\d+).red', game)))
+        if 'blue' in game:
+            blues = list(map(int, re.findall(r'(\d+).blue', game)))
+        if 'green' in game:
+            greens = list(map(int, re.findall(r'(\d+).green', game)))
+        
+        max_red = max(reds)
+        max_blue = max(blues)
+        max_green = max(greens)
+        powers.append(max_red * max_blue * max_green)
     
+    for power in powers:
+        sum += power
+
+    print(sum)
+    
+
 if __name__ == '__main__':
     main()
